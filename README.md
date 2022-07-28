@@ -3,7 +3,7 @@
 
 ## Description
 
-Using NodeJS and the Express package, create an application that will be able to write, save, and retrieve notes
+Using NodeJS and the Express package, create an application that will be able to write, save, and retrieve notes. This application is deployed to Heroku at the following link: https://note-taker-ehw.herokuapp.com/
 
 ## Table of Contents 
 
@@ -35,7 +35,7 @@ https://github.com/ericwittenstein/NoteTaker
 
 ## Project Demo
 
-    **_ THIS IS A PLACEHOLDER FOR AN IMAGE OR SCREEN RECORDING OF THE PROJECT _**
+![This is a screenshot of the deployed application on Heroku](./images/Screenshot.png)
 
 ## Contributing
 
@@ -43,11 +43,7 @@ Ask first
 
 ## Testing
 
-To initiate the unit tests for this project, run the following command in the console/command line: 
-
-```
-npm test
-```
+There are no unit tests for this project
 
 ## Questions and Contact Info
 

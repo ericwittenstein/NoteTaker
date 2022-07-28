@@ -6,7 +6,6 @@ const fs = require('fs');
 const notesList = require('./db/db.json');
 const { readFromFile, writeToFile, readAndAppend } = require('./helpers/fsUtils');
 
-
 // uuid makes a random number; this line of text showed up after i autocompleted a portion of my post api route text, looks like its part of TypeScript?
 const uuid = require('./helpers/uuid');
 
@@ -46,34 +45,27 @@ app.post('/api/notes', (req, res) => {
         };
 
         readAndAppend(noteToAdd, './db/db.json');
-        res.json(notesList);
-    }
-    else {
+        res.json('id generated');
+    } else {
         console.log(`Error! Try again!`);
     }
 });
 
 // delete method re-writes the json file to include everything except the note at the specified id
-app.delete('/api/notes/:id', (req, res) => {
-    // reads the notes list as it stands
-    let notes = fs.readFileSync('./db/db.json');
-    // parses it
-    notes = JSON.parse(notes);
-    // returns the parsed notes
-    res.json(notes);
-    // creates a variable of the note at the specified id
-    const { id } = req.params;
+// app.delete('/api/notes/:id', (req, res) => {
+//     // reads the notes list as it stands
+//     let notes = fs.readFileSync('./db/db.json');
+//     // parses it
+//     notes = JSON.parse(notes);
+//     // returns the parsed notes
+//     res.json(notes);
+//     // creates a variable of the note at the specified id
+//     const { id } = req.params;
 
-    // re-writes the notes variable to exclude the chosen note
-    notes = notes.filter(noteToDelete => noteToDelete.id !== id);
-    fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Note Deleted');
-        }
-    });
-});
+//     // re-writes the notes variable to exclude the chosen note
+//     notes = notes.filter(noteToDelete => noteToDelete.id !== id);
+//     fs.writeFile('./db/db.json', JSON.stringify(notes));
+// });
 
 // initial server creation at port
 app.listen(PORT, () =>

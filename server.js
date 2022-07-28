@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 
-const notes = require('./db/db.json');
+const notesList = require('./db/db.json');
 const { readFromFile, writeToFile, readAndAppend } = require('./helpers/fsUtils');
 
 
@@ -31,7 +31,7 @@ app.get('/notes', (req, res) => {
 
 // get method for retrieving notes and parsing through json
 app.get('/api/notes', (req, res) => {
-    res.json(notes);
+    res.json(notesList);
 });
 
 // post method for writing notes
@@ -46,11 +46,33 @@ app.post('/api/notes', (req, res) => {
         };
 
         readAndAppend(noteToAdd, './db/db.json');
-        res.json(notes);
+        res.json(notesList);
     }
     else {
         console.log(`Error! Try again!`);
     }
+});
+
+// delete method re-writes the json file to include everything except the note at the specified id
+app.delete('/api/notes/:id', (req, res) => {
+    // reads the notes list as it stands
+    let notes = fs.readFileSync('./db/db.json');
+    // parses it
+    notes = JSON.parse(notes);
+    // returns the parsed notes
+    res.json(notes);
+    // creates a variable of the note at the specified id
+    const { id } = req.params;
+
+    // re-writes the notes variable to exclude the chosen note
+    notes = notes.filter(noteToDelete => noteToDelete.id !== id);
+    fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Note Deleted');
+        }
+    });
 });
 
 // initial server creation at port

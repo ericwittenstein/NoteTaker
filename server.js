@@ -45,7 +45,13 @@ app.post('./api/notes', (req, res) => {
             title,
             text,
             noteId: randomUUID,
-        }
+        };
+
+        readAndAppend(noteToAdd, './db/db.json');
+        res.json('Note added!');
+    }
+    else {
+        console.log(`Error! Try again!`);
     }
 });
 
